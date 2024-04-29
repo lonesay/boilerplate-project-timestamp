@@ -25,6 +25,12 @@ app.get("/api/hello", function (req, res) {
 });
 
 
+app.get("/api/:date", (req, res) => {
+  let p = parseInt(req.params.date);
+  let date = new Date(p == NaN ? req.params.date: parseInt(p * 1000));
+  res.json({unix: p == NaN ? Date.parse(req.params.date) : p, utc:date.toUTCString()});
+});
+
 
 // Listen on port set in environment variable or default to 3000
 var listener = app.listen(process.env.PORT || 3000, function () {
