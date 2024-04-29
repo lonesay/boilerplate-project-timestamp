@@ -26,9 +26,13 @@ app.get("/api/hello", function (req, res) {
 
 
 app.get("/api/:date", (req, res) => {
+  let valid = new Date(req.params.date) != "Invalid Date";
   let p = parseInt(req.params.date);
-  let date = new Date(p == NaN ? req.params.date: parseInt(p * 1000));
-  res.json({unix: p == NaN ? Date.parse(req.params.date) : p, utc:date.toUTCString()});
+  let date = new Date(valid ? req.params.date : p * 1000);
+  res.json({
+    unix: valid ? Date.parse(req.params.date): p * 1000,
+    utc:date.toUTCString()
+  });
 });
 
 
